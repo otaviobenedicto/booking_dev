@@ -1,11 +1,13 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+
 import authRoute from './routes/auth.js'
-import bodyparser from 'body-parser'
-// import userRoute from './routes/users.js'
-// import roomsRoute from './routes/rooms.js'
+import userRoute from './routes/users.js'
+import roomsRoute from './routes/rooms.js'
 import hotelsRoute from './routes/hotels.js'
+
+import bodyparser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
 const app = express()
@@ -14,7 +16,6 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use(express.json())
 dotenv.config()
-
 
 const connect = async () => {
     try {
@@ -41,9 +42,9 @@ app.get("/", (req, res) => {
 // middlewares
 
 app.use("/api/auth", authRoute)
-// app.use("/api/user", userRoute)
+app.use("/api/user", userRoute)
 app.use("/api/hotel", hotelsRoute)
-// app.use("/api/rooms", roomsRoute)
+app.use("/api/room", roomsRoute)
 
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500
